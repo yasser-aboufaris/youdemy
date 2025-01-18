@@ -2,6 +2,7 @@
 class User {
     protected $pdo;
     private $id_user;
+    private $user_name;
     private $email;
     private $password;
     private $role;
@@ -12,31 +13,22 @@ class User {
         $this->password = $password;
     }
 
-    public function login() {
-        try {
-            $stmt = $this->pdo->prepare("SELECT id_user, password, role FROM users WHERE email = ?");
-            $stmt->execute([$this->email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$user || !password_verify($this->password, $user['password'])) {
-                throw new Exception("Invalid email or password");
-            }
-
-            $this->id_user = $user['id_user'];
-            $this->role = $user['role'];
-            
-            session_start();
-            $_SESSION["user_id"] = $this->id_user;
-            $_SESSION["role"] = $this->role;
-            $_SESSION["email"] = $this->email;
-            
-            header('Location: ../clientVue/home.php');
-            exit;
-            
-        } catch (Exception $e) {
-            return $e->getMessage();
+    public static function readUsers($pdo){
+        $qry="select * from users where id_role !=1";
+        $stmt=$pdo->prepare($qry);
+        $stmt->execute();
+        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users=[];
+        foreach($data as $row){
+            $object = new self($pdo);
+            $object->setIdUser($row['id_user']);
+            $object->setEmail($row['user_email']);
+            $object->setUserName($row['user_name']);
+            array_push($users,$object);
         }
-    }
+        return $users;
+    } 
+
 
     // Getters and Setters
     public function getIdUser() {
@@ -45,6 +37,13 @@ class User {
 
     public function setIdUser($id_user) {
         $this->id_user = $id_user;
+    }
+
+    public function setUserName($name){
+        $this->user_name=$name;
+    }
+    public function getUserName() {
+        return $this->user_name;
     }
 
     public function getEmail() {

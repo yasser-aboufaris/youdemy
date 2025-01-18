@@ -6,5 +6,7 @@ class Client extends User {
         parent::__construct($pdo);
     }
 
+    
+
 
 }

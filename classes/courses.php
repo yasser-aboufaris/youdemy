@@ -34,6 +34,16 @@ class Course {
         }
     }   
 
+
+    public static function countCourses($pdo){
+        $qry="select count(*) from courses";
+        $stmt=$pdo->prepare($qry);
+        $data=$stmt->execute($stmt);
+        foreach($data as $row){
+                
+        }
+    }
+
     public function update() {
         try {
             $qry = "UPDATE courses 

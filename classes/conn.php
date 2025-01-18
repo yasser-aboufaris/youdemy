@@ -15,7 +15,7 @@ class Connection
             $this->conn = new PDO("mysql:host=$this->serverName;dbname=$this->database", $this->username, $this->password);
 
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection good";
+            // echo "Connection khedama";
         } 
         catch(PDOException $e) {
             echo "error";

@@ -10,25 +10,29 @@ class Category {
         $this->pdo = $pdo;
     }
     
-    public function readCategories() {
+    public static function readCategories() {
         try {
             $qry = "SELECT * FROM categories";
             $stmt = $this->pdo->prepare($qry);
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $objects=[];
             foreach($data as $object){
                 $object = new self();
                 $object->setId($data['id_categorie']);
                 $object->setName($data['categorie_name'])
                 $object->setDescription($data['categorie_description']);
+                array_push($objects,$object);
+                
             }
+            return $objects;
         } catch(Exception $ex) {
             throw new Exception("Error in readCategories method: " . $ex->getMessage());
         }
     }
     
 
-    public function readCategoriesByPage($start_from,$limit) {
+    public static function readCategoriesByPage($start_from,$limit) {
         try {
             $sql = "SELECT * FROM your_table LIMIT :start_from, :limit";
             $stmt->bindParam(":start_from,", $start_from);
