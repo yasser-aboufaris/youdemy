@@ -11,16 +11,23 @@ class Course {
         $this->pdo = $pdo;
     }
     
-    public function readCourses() {
-        try {
-            $qry = "SELECT * FROM courses";
-            $stmt = $this->pdo->prepare($qry);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch(Exception $ex) {
-            throw new Exception("Error in readCourse method: " . $ex->getMessage());
+
+    public static function readCourses($pdo){
+        $qry="select * from courses";
+        $stmt=$pdo->prepare($qry);
+        $stmt->execute();
+        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users=[];
+        foreach($data as $row){
+            $object = new self($pdo);
+            $object->setIdUser($row['id_course']);
+            $object->setEmail($row['title']);
+            $object->setDescription($row['description']);
+            $object->setUserName($row['content']);
+            array_push($users,$object);
         }
-    }
+        return $users;
+    } 
 
 
     public function delete() {

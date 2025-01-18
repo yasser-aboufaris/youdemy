@@ -10,34 +10,55 @@ $users =User::readUsers($conn);
   <meta charset="UTF-8">
   <title>Course Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  </head>
 <body class="bg-gray-50">
   <!-- Sidebar -->
-  <div class="fixed inset-y-0 left-0 w-72 bg-udemy-primary text-white">
-    <div class="p-6 border-b border-white/10">
-      <h1 class="text-2xl font-bold">YourDemy</h1>
-    </div>
-    <nav class="mt-6 px-4">
-      <a href="#" class="flex items-center space-x-3 bg-udemy-accent rounded-lg px-4 py-3 mb-2">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-        </svg>
-        <span>Dashboard</span>
-      </a>
-      <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-        </svg>
-        <span>Users</span>''
-      </a>
-      <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-        </svg>
-        <span>Courses</span>
-      </a>
-    </nav>
+<div class="fixed inset-y-0 left-0 w-72 bg-udemy-primary text-black">
+  <div class="p-6 border-b border-white/10">
+    <h1 class="text-2xl font-bold">YourDemy</h1>
   </div>
+  <nav class="mt-6 px-4">
+    <!-- Dashboard -->
+    <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      <span>Dashboard</span>
+    </a>
+
+    <!-- Users -->
+    <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <span>Users</span>
+    </a>
+
+    <!-- Categories -->
+    <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+      </svg>
+      <span>Categories</span>
+    </a>
+
+    <!-- Tags -->
+    <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+      </svg>
+      <span>Tags</span>
+    </a>
+
+    <!-- Pending Teachers -->
+    <a href="#" class="flex items-center space-x-3 hover:bg-white/10 rounded-lg px-4 py-3 mb-2 transition duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <span>Pending Teachers</span>
+    </a>
+  </nav>
+</div>
 
   <!-- Main Content -->
   <div class="ml-72 p-8">
@@ -66,8 +87,8 @@ $users =User::readUsers($conn);
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-gray-600 text-sm font-medium">Total Users</h3>
         </div>
-        <p class="text-3xl font-bold text-gray-800">1,234</p>
-        <div class="mt-2 text-sm text-gray-600">From previous month</div>
+        <p class="text-3xl font-bold text-gray-800"><?php echo count($users)?></p>
+        <div class="mt-2 text-sm text-gray-600">in youcourse</div>
       </div>
       
       <div class="bg-white rounded-xl shadow-sm p-6 border border-udemy-border">
@@ -171,8 +192,7 @@ $users =User::readUsers($conn);
                 Jan 12, 2024
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button class="text-udemy-accent hover:text-purple-700 mr-3">Edit</button>
-                <button class="text-red-600 hover:text-red-900">Delete</button>
+                <button class="text-red-600 hover:text-red-900">ban</button>
               </td>
             </tr><?php }?>
           </tbody>
