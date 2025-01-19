@@ -1,7 +1,7 @@
 <?php 
 include "../../classes/conn.php";
-include "../../classes/user.php";
-$users =User::readUsers($conn);
+include "../../classes/client.php";
+$users =Client::readClients($conn);
 ?>
 
 <!DOCTYPE html>
@@ -90,14 +90,7 @@ $users =User::readUsers($conn);
         <p class="text-3xl font-bold text-gray-800"><?php echo count($users)?></p>
         <div class="mt-2 text-sm text-gray-600">in youcourse</div>
       </div>
-      
-      <div class="bg-white rounded-xl shadow-sm p-6 border border-udemy-border">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-gray-600 text-sm font-medium">Active Courses</h3>
-        </div>
-        <p class="text-3xl font-bold text-gray-800">56</p>
-        <div class="mt-2 text-sm text-gray-600">Currently running</div>
-      </div>
+
 
       <div class="bg-white rounded-xl shadow-sm p-6 border border-udemy-border">
         <div class="flex items-center justify-between mb-4">

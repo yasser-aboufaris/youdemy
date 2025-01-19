@@ -1,8 +1,8 @@
 <?php 
 include "../../classes/conn.php";
 include "../../classes/courses.php";
-couses::readCourses($pdo);
-echo $courses[1]
+$courses = Course::readCourses($conn);
+// var_dump($courses)
 ?>
 
 <!DOCTYPE html>

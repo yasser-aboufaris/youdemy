@@ -26,7 +26,7 @@ class Course {
         
         foreach($data as $row){
             $object = new self($pdo);
-            $object->setIdCourse($row['id_course']);
+            $object->setId($row['id_course']);
             $object->setTitle($row['title']);
             $object->setDescription($row['description']);
             $object->setContent($row['content']);
