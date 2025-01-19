@@ -13,22 +13,28 @@ class Course {
     
 
     public static function readCourses($pdo){
-        $qry="select * from courses";
-        $stmt=$pdo->prepare($qry);
+        $qry = "
+            SELECT * 
+            FROM courses 
+            LEFT JOIN categories 
+            ON courses.id_categorie = categories.id_categorie
+        ";
+        $stmt = $pdo->prepare($qry);
         $stmt->execute();
-        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
-        $users=[];
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $courses = [];
+        
         foreach($data as $row){
             $object = new self($pdo);
-            $object->setIdUser($row['id_course']);
-            $object->setEmail($row['title']);
+            $object->setIdCourse($row['id_course']);
+            $object->setTitle($row['title']);
             $object->setDescription($row['description']);
-            $object->setUserName($row['content']);
-            array_push($users,$object);
+            $object->setContent($row['content']);
+            array_push($courses, $object);
         }
-        return $users;
-    } 
-
+        return $courses;
+    }
+    
 
     public function delete() {
         try {

@@ -1,3 +1,10 @@
+<?php 
+include "../../classes/conn.php";
+include "../../classes/courses.php";
+couses::readCourses($pdo);
+echo $courses[1]
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
