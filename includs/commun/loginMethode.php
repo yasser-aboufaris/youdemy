@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Check if the email exists
-        $stmt = $conn->prepare("SELECT user_id, password FROM users WHERE user_email = :email");
+        $stmt = $conn->prepare("SELECT  id_user, password FROM users WHERE user_email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

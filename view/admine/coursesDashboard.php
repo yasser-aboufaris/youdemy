@@ -125,15 +125,16 @@ $courses = Course::readCourses($conn);
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead class="bg-gray-50">
+            
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Started</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorie</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
+          <?php foreach($courses as $course){?>
             <tr class="hover:bg-gray-50 transition duration-200">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
@@ -141,31 +142,22 @@ $courses = Course::readCourses($conn);
                     <img class="h-10 w-10 rounded-full" src="/api/placeholder/40/40" alt="Course thumbnail">
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">Web Development Basics</div>
+                    <div class="text-sm font-medium text-gray-900"><?php echo $course->getTitle() ?> </div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                  John Smith
+                <?php echo $course->getTeacher() ?> 
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Active
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                Jan 12, 2024
+              <?php echo $course->getDescription() ?>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button class="text-red-600 hover:text-red-900">archive</button>
+                <button class="text-red-600 hover:text-red-900"><?php echo $course->getCategorie() ?></button>
               </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+            </tr><?php }?>
   </div>
 </body>
 </html>

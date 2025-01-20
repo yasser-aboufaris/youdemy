@@ -6,6 +6,8 @@ class Course {
     private $description;
     private $content;
     private $type;
+    private $categorie;
+    private $teacher;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -16,8 +18,10 @@ class Course {
         $qry = "
             SELECT * 
             FROM courses 
-            LEFT JOIN categories 
+            left join categories 
             ON courses.id_categorie = categories.id_categorie
+            left join users on users.id_user = courses.id_teacher;
+
         ";
         $stmt = $pdo->prepare($qry);
         $stmt->execute();
@@ -30,6 +34,39 @@ class Course {
             $object->setTitle($row['title']);
             $object->setDescription($row['description']);
             $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
+            array_push($courses, $object);
+        }
+        return $courses;
+    }
+
+
+    public static function readCoursesByTeacher($pdo,$id_teacher){
+        $qry = "
+            SELECT * 
+            FROM courses 
+            left join categories 
+            ON courses.id_categorie = categories.id_categorie
+            left join users on users.id_user = courses.id_teacher
+            where id_teacher = :id_yeacher
+            ;
+
+        ";
+        $stmt = $pdo->prepare($qry);
+        $stmt->bindParam(":id_teacher",$id_teacher);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $courses = [];
+        
+        foreach($data as $row){
+            $object = new self($pdo);
+            $object->setId($row['id_course']);
+            $object->setTitle($row['title']);
+            $object->setDescription($row['description']);
+            $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
             array_push($courses, $object);
         }
         return $courses;
@@ -48,14 +85,6 @@ class Course {
     }   
 
 
-    public static function countCourses($pdo){
-        $qry="select count(*) from courses";
-        $stmt=$pdo->prepare($qry);
-        $data=$stmt->execute($stmt);
-        foreach($data as $row){
-                
-        }
-    }
 
     public function update() {
         try {
@@ -75,7 +104,7 @@ class Course {
         }
     }
 
-    public function create() {
+    public function insert() {
         try {
             $qry = "INSERT INTO courses (course_title, course_description, course_content, course_type)
                     VALUES (:title, :description, :content, :type)";
@@ -138,5 +167,27 @@ class Course {
     public function setType($type) {
         $this->type = $type;
         return $this;
+}
+
+
+
+public function getCategorie() {
+    return $this->categorie;
+}
+
+
+public function setCategorie($categorie) {
+    $this->categorie = $categorie;
+}
+
+
+
+public function getTeacher() {
+    return $this->teacher;
+}
+
+
+public function setTeacher($teacher) {
+    $this->teacher = $teacher;
 }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Category {
+class Categorie {
     private $pdo;
     private $id_categorie;
     private $name;
@@ -10,23 +10,24 @@ class Category {
         $this->pdo = $pdo;
     }
     
-    public static function readCategories() {
+    public static function readCategories($pdo) {
         try {
             $qry = "SELECT * FROM categories";
-            $stmt = $this->pdo->prepare($qry);
+            $stmt = $pdo->prepare($qry);
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $objects=[];
-            foreach($data as $object){
+            $objects = [];
+    
+            foreach ($data as $row) { 
                 $object = new self();
-                $object->setId($data['id_categorie']);
-                $object->setName($data['categorie_name'])
-                $object->setDescription($data['categorie_description']);
-                array_push($objects,$object);
-                
+                $object->setId($row['id_categorie']);
+                $object->setName($row['categorie_name']);
+                $object->setDescription($row['categorie_description']);
+                array_push($objects, $object);
             }
+    
             return $objects;
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             throw new Exception("Error in readCategories method: " . $ex->getMessage());
         }
     }

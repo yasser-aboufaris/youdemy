@@ -22,7 +22,7 @@
         <p class="text-gray-500 text-center mb-8">Please login to your account</p>
 
         <!-- Form -->
-        <form action="#" method="POST" class="space-y-6">
+        <form action="../../includs/commun/loginMethode.php" method="POST" class="space-y-6">
             <!-- Email -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
