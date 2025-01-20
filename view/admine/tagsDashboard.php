@@ -1,9 +1,8 @@
 <?php 
 include "../../classes/conn.php";
-include "../../classes/tag.php";
+include "../../classes/tags.php";
 session_start();
 
-// Vérification de l'authentification admin
 // if(!isset($_SESSION['role'])) {
 //     header('Location: login.php');
 //     exit;
@@ -74,7 +73,6 @@ $tags = Tag::readTags($conn);
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-gray-600 text-sm font-medium">Most Used Tag</h3>
         </div>
-        <p class="text-3xl font-bold text-gray-800"><?= Tag::getMostUsedTag($conn) ?></p>
       </div>
     </div>
 

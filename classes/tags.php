@@ -9,14 +9,27 @@ class Tag {
         $this->pdo = $pdo;
     }
     
-    public function readTags() {
+    public static function readTags($pdo) {
         try {
             $qry = "SELECT * FROM tags";
-            $stmt = $this->pdo->prepare($qry);
+            $stmt = $pdo->prepare($qry);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(Exception $ex) {
             throw new Exception("Error in readTags method: " . $ex->getMessage());
+        }
+    }
+
+
+    public static function findTag($pdo, $id) {
+        try {
+            $qry = "SELECT * FROM tags WHERE id_tag = :id_tag";
+            $stmt = $pdo->prepare($qry);
+            $stmt->bindParam(":id_tag", $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch(Exception $ex) {
+            throw new Exception("Error in findTag method: " . $ex->getMessage());
         }
     }
 
