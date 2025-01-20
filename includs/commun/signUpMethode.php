@@ -35,12 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+            // Determine the activation status based on the role
+            if ($role == 1) {  // Assuming 1 is for inactive users
+                $activated = 0;
+            } else {
+                $activated = 1; // Active for other roles
+            }
+
             // Insert the data
-            $stmt = $conn->prepare("INSERT INTO users ( user_name, user_email,id_role, password) VALUES (:name, :email, :role, :password)");
+            $stmt = $conn->prepare("INSERT INTO users (user_name, user_email, id_role, password, activated) VALUES (:name, :email, :role, :password, :activated)");
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':role', $role);
             $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':activated', $activated);
             $stmt->execute();
 
             echo "Signup successful!";

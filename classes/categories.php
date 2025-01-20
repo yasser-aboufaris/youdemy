@@ -33,19 +33,6 @@ class Categorie {
     }
     
 
-    public static function readCategoriesByPage($start_from,$limit) {
-        try {
-            $sql = "SELECT * FROM your_table LIMIT :start_from, :limit";
-            $stmt->bindParam(":start_from,", $start_from);
-            $stmt->bindParam(":limit", $limit);
-            $stmt = $this->pdo->prepare($qry);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch(Exception $ex) {
-            throw new Exception("Error in readCategories method: " . $ex->getMessage());
-        }
-    }
-    
     
 
 

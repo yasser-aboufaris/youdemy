@@ -42,6 +42,52 @@ class Course {
     }
 
 
+
+    public static function readCoursesByPagination($pdo, $limit = 6, $offset = 0) {
+        $qry = "
+            SELECT 
+                * 
+            FROM 
+                courses 
+            LEFT JOIN 
+                categories 
+            ON 
+                courses.id_categorie = categories.id_categorie 
+            LEFT JOIN 
+                users 
+            ON 
+                users.id_user = courses.id_teacher 
+            LIMIT 
+                :limit 
+            OFFSET 
+                :offset;
+        ";
+        
+        $stmt = $pdo->prepare($qry);
+        $stmt->bindValue(':limit', $limit);
+        $stmt->bindValue(':offset', $offset);
+        $stmt->execute();
+        
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $courses = [];
+        
+        foreach ($data as $row) {
+            $object = new self($pdo);
+            $object->setId($row['id_course']);
+            $object->setTitle($row['title']);
+            $object->setDescription($row['description']);
+            $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
+            
+            array_push($courses, $object);
+        }
+        
+        return $courses;
+    }
+    
+
+
     public static function readCoursesByTeacher($pdo,$id_teacher){
         $qry = "
             SELECT * 
