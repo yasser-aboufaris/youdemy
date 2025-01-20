@@ -159,12 +159,10 @@ $users =Client::readClients($conn);
             <tr class="hover:bg-gray-50 transition duration-200"> -->
               <?php 
               foreach($users as $object){
+                
               ?>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full" src="/api/placeholder/40/40" alt="User avatar">
-                  </div>
+                <div class="flex items-center">²
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900"><?php echo $object->getUserName();?></div>
                     <div class="text-sm text-gray-500"><?php echo $object->getEmail();?></div>

@@ -11,29 +11,47 @@
   ?>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
-  <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto">
-      <div class="flex justify-between items-center py-4 px-6">
-        <a href="#" class="flex items-center space-x-2">
-          <span class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">YouDem</span>
-        </a>
-        <nav class="hidden md:flex items-center space-x-8">
-          <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Courses</a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">About</a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
-        </nav>
-        <div class="flex items-center space-x-4">
-          <a href="#" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Login</a>
-          <button class="md:hidden">
-            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="container mx-auto">
+    <div class="flex justify-between items-center py-4 px-6">
+      <a href="#" class="flex items-center space-x-2">
+        <span class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">YouDem</span>
+      </a>
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Courses</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">About</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <!-- Search Bar -->
+        <form action="#" method="GET" class="hidden md:flex items-center mx-auto border border-gray-300 rounded-full overflow-hidden shadow-sm w-[400px]">
+          <input 
+            type="text" 
+            name="search" 
+            placeholder="Search..." 
+            class="px-4 py-2 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+          >
+          <button 
+            type="submit" 
+            class="bg-blue-600 text-white px-6 py-2 font-medium hover:bg-blue-700 transition-colors"
+          >
+            Search
           </button>
-        </div>
+        </form>
+        <a href="#" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Login</a>
+        <button class="md:hidden">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
       </div>
     </div>
-  </header>
+  </div>
+</header>
+
+
+
 
   <main class="flex-grow">
     <!-- Hero Section -->
@@ -62,9 +80,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Category Title</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo $row->getName(); ?></h3>
             <p class="text-gray-600 mb-4">Discover courses in this category and start learning today.</p>
-            <a href="#" class="text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center">
+            <a href="./coursesById.php?id=<?php echo $row->getId(); ?>" class="text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center">
               Browse Courses
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

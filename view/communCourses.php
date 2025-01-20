@@ -68,38 +68,7 @@
                 </div>
             </div>
 
-            <!-- Course Card 2 -->
-            <div class="flex items-center bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-4 space-x-4">
-                <img src="/api/placeholder/120/80" alt="Course Image" class="w-32 h-20 rounded-md object-cover flex-shrink-0">
-                <div class="flex-1">
-                    <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors">
-                        UI/UX Design Fundamentals
-                    </h3>
-                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">
-                        Learn modern UI/UX design principles and create stunning user interfaces using Figma and Adobe XD.
-                    </p>
-                    <div class="flex items-center text-xs text-gray-500 mt-3 space-x-6">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            24 hours
-                        </div>
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.318l-1.318 2.684-2.946.429 2.132 2.084-.503 2.943L12 11.446l2.635 1.012-.503-2.943 2.132-2.084-2.946-.429L12 4.318z" />
-                            </svg>
-                            4.9 (956)
-                        </div>
-                    </div>
-                </div>
-                <div class="text-right flex-shrink-0">
-                    <div class="text-lg font-bold text-blue-600 mb-2">Free</div>
-                    <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-                        View Course
-                    </a>
-                </div>
-            </div>
+        
         </div>
 
         <!-- Pagination -->
