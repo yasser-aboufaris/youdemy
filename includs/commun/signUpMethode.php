@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Check if the email already exists
     try {
         $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE user_email = :email");
         $stmt->bindParam(':email', $email);
@@ -32,17 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($emailExists) {
             echo "This email is already registered!";
         } else {
-            // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Determine the activation status based on the role
-            if ($role == 1) {  // Assuming 1 is for inactive users
+            if ($role == 1) {  
                 $activated = 0;
             } else {
-                $activated = 1; // Active for other roles
+                $activated = 1; 
             }
 
-            // Insert the data
             $stmt = $conn->prepare("INSERT INTO users (user_name, user_email, id_role, password, activated) VALUES (:name, :email, :role, :password, :activated)");
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);

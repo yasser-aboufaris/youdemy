@@ -58,7 +58,7 @@
         <!-- Footer -->
         <p class="text-sm text-gray-500 mt-8 text-center">
             Don't have an account? 
-            <a href="#" class="text-violet-600 font-semibold hover:text-violet-700 hover:underline transition duration-200">Sign up</a>
+            <a href="./signup.php" class="text-violet-600 font-semibold hover:text-violet-700 hover:underline transition duration-200">Sign up</a>
         </p>
     </div>
 </body>
