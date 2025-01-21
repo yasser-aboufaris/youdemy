@@ -25,20 +25,7 @@
       </nav>
       <div class="flex items-center space-x-4">
         <!-- Search Bar -->
-        <form action="#" method="GET" class="hidden md:flex items-center mx-auto border border-gray-300 rounded-full overflow-hidden shadow-sm w-[400px]">
-          <input 
-            type="text" 
-            name="search" 
-            placeholder="Search..." 
-            class="px-4 py-2 w-full text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-          >
-          <button 
-            type="submit" 
-            class="bg-blue-600 text-white px-6 py-2 font-medium hover:bg-blue-700 transition-colors"
-          >
-            Search
-          </button>
-        </form>
+  
         <a href="#" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Login</a>
         <button class="md:hidden">
           <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +68,7 @@
               </svg>
             </div>
             <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo $row->getName(); ?></h3>
-            <p class="text-gray-600 mb-4">Discover courses in this category and start learning today.</p>
+            <p class="text-gray-600 mb-4"><?php echo $row->getDescription();?></p>
             <a href="./coursesById.php?id=<?php echo $row->getId(); ?>" class="text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center">
               Browse Courses
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -41,24 +41,26 @@ class Course {
         return $courses;
     }
 
-
-    public static function readCoursesByCategorie($pdo,$id_categorie){
+    public static function readCoursesByCategorie($pdo, $id_categorie) {
         $qry = "
             SELECT * 
             FROM courses 
-            left join categories 
+            LEFT JOIN categories 
             ON courses.id_categorie = categories.id_categorie
-            left join users on users.id_user = courses.id_teacher;
-            where id_categorie = :id_categorie
-
+            LEFT JOIN users 
+            ON users.id_user = courses.id_teacher
+            WHERE courses.id_categorie = :id_categorie
         ";
+    
         $stmt = $pdo->prepare($qry);
+        $stmt->bindParam(':id_categorie', $id_categorie);
+    
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $courses = [];
-        
-        foreach($data as $row){
-            $object = new self($pdo);
+    
+        foreach ($data as $row) {
+            $object = new self($pdo); 
             $object->setId($row['id_course']);
             $object->setTitle($row['title']);
             $object->setDescription($row['description']);
@@ -69,6 +71,7 @@ class Course {
         }
         return $courses;
     }
+    
 
 
 
@@ -80,12 +83,12 @@ class Course {
             courses.id_categorie = categories.id_categorie 
             LEFT JOIN users 
             ON users.id_user = courses.id_teacher 
-            LIMIT :offset , :limit; 
+            LIMIT :offset, :limit
         ";
         
         $stmt = $pdo->prepare($qry);
-        $stmt->bindValue(':limit', $limit);
-        $stmt->bindValue(':offset', $offset);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);  // Fixed bindParam and added type
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT); // Fixed bindParam and added type
         $stmt->execute();
         
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -103,7 +106,6 @@ class Course {
         }
         return $courses;
     }
-    
 
 
     public static function readCoursesByTeacher($pdo,$id_teacher){

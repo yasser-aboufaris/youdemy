@@ -1,7 +1,22 @@
-<?php include "../classes/conn.php" 
-include "../classes/conn.php" 
-?>
+<?php 
+include "../classes/conn.php";
+include "../classes/courses.php";
 
+// Simple pagination setup
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$courses_per_page = 6;
+$offset = ($current_page - 1) * $courses_per_page;
+
+// Get total pages
+$count_query = "SELECT COUNT(*) as total FROM courses";
+$stmt = $conn->prepare($count_query);
+$stmt->execute();
+$total_courses = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+$total_pages = ceil($total_courses / $courses_per_page);
+
+// Get courses for current page
+$courses = Course::readCoursesByPagination($conn, $courses_per_page, $offset);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,83 +27,71 @@ include "../classes/conn.php"
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
-    <!-- Course Display Section -->
     <section class="py-12">
-    <div class="container mx-auto px-4">
-        <!-- Header and Filters -->
-        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">Explore Our Courses</h1>
-                <p class="mt-2 text-gray-600">Discover the perfect course to advance your skills</p>
-            </div>
-            <div class="mt-4 md:mt-0 flex flex-wrap gap-4">
-                <select class="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Categories</option>
-                    <option value="development">Development</option>
-                    <option value="business">Business</option>
-                    <option value="design">Design</option>
-                </select>
-                <select class="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Sort By</option>
-                    <option value="popular">Most Popular</option>
-                    <option value="newest">Newest</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                </select>
-            </div>
-        </div>
+        <div class="container mx-auto px-4">
 
-        <!-- Course List -->
-        <div class="space-y-6">
-            <!-- Course Card -->
-            <div class="flex items-center bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-4 space-x-4">
-                <img src="/api/placeholder/120/80" alt="Course Image" class="w-32 h-20 rounded-md object-cover flex-shrink-0">
-                <div class="flex-1">
-                    <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors">
-                        Complete Web Development Bootcamp
-                    </h3>
-                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">
-                        Learn web development from scratch with HTML, CSS, JavaScript, React, and Node.js. Build real-world projects.
-                    </p>
-                    <div class="flex items-center text-xs text-gray-500 mt-3 space-x-6">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            48 hours
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach ($courses as $course): ?>
+                    <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-4">
+                        <img src="/api/placeholder/120/80" alt="Course Image" class="w-full h-32 rounded-md object-cover mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors">
+                                <?php echo htmlspecialchars($course->getTitle()); ?>
+                            </h3>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                                <?php echo htmlspecialchars($course->getDescription()); ?>
+                            </p>
+                            <div class="flex items-center text-xs text-gray-500 mt-3 space-x-6">
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    <?php echo htmlspecialchars($course->getTeacher()); ?>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                    </svg>
+                                    <?php echo htmlspecialchars($course->getCategorie()); ?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.318l-1.318 2.684-2.946.429 2.132 2.084-.503 2.943L12 11.446l2.635 1.012-.503-2.943 2.132-2.084-2.946-.429L12 4.318z" />
-                            </svg>
-                            4.8 (2,456)
+                        <div class="mt-4 text-right">
+                            <a href="course-details.php?id=<?php echo $course->getId(); ?>" 
+                               class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
+                                View Course
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="text-right flex-shrink-0">
-                    <div class="text-lg font-bold text-blue-600 mb-2">$89.99</div>
-                    <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-                        View Course
-                    </a>
-                </div>
+                <?php endforeach; ?>
             </div>
 
-        
+            <!-- Pagination -->
+            <?php if ($total_pages > 1): ?>
+                <div class="mt-12 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <?php if ($current_page > 1): ?>
+                            <a href="?page=<?php echo $current_page - 1; ?>" 
+                               class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Previous</a>
+                        <?php endif; ?>
+                        
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <a href="?page=<?php echo $i; ?>" 
+                               class="px-4 py-2 <?php echo $i === $current_page 
+                                    ? 'bg-blue-600 text-white' 
+                                    : 'text-gray-700 hover:bg-gray-100'; ?> rounded-lg text-sm">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+                        
+                        <?php if ($current_page < $total_pages): ?>
+                            <a href="?page=<?php echo $current_page + 1; ?>" 
+                               class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Next</a>
+                        <?php endif; ?>
+                    </nav>
+                </div>
+            <?php endif; ?>
         </div>
-
-        <!-- Pagination -->
-        <div class="mt-12 flex justify-center">
-            <nav class="flex items-center space-x-2">
-                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Previous</a>
-                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm">1</a>
-                <a href="#" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm">2</a>
-                <a href="#" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm">3</a>
-                <span class="px-4 py-2 text-gray-400">...</span>
-                <a href="#" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg text-sm">8</a>
-                <a href="#" class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Next</a>
-            </nav>
-        </div>
-    </div>
-</section>
+    </section>
 </body>
 </html>
