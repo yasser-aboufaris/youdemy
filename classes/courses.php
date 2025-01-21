@@ -8,6 +8,7 @@ class Course {
     private $type;
     private $categorie;
     private $teacher;
+    private $tags;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -212,7 +213,10 @@ class Course {
 ////////////////////////////////////////////////////////////////////////////////
     public function setId($id) {
         $this->id_course = $id;
-        return $this;
+    }
+
+    public function setId($tags) {
+        $this->tags = $tags;
     }
 
     public function setTitle($title) {
@@ -222,17 +226,14 @@ class Course {
 
     public function setDescription($description) {
         $this->description = $description;
-        return $this;
     }
 
     public function setContent($content) {
         $this->content = $content;
-        return $this;
     }
 
     public function setType($type) {
         $this->type = $type;
-        return $this;
 }
 
 

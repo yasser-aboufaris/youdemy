@@ -11,25 +11,32 @@
   ?>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header class="bg-white shadow-md sticky top-0 z-50">
   <div class="container mx-auto">
     <div class="flex justify-between items-center py-4 px-6">
+      <!-- Logo -->
       <a href="#" class="flex items-center space-x-2">
-        <span class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">YouDem</span>
+        <span class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-transparent bg-clip-text">YouDem</span>
       </a>
+      
+      <!-- Navigation -->
       <nav class="hidden md:flex items-center space-x-8">
-        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Courses</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">About</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
+        <a href="#" class="text-gray-700 hover:text-purple-600 font-medium transition-colors">Home</a>
+        <a href="#" class="text-gray-700 hover:text-purple-600 font-medium transition-colors">Courses</a>
+        <a href="#" class="text-gray-700 hover:text-purple-600 font-medium transition-colors">About</a>
+        <a href="#" class="text-gray-700 hover:text-purple-600 font-medium transition-colors">Contact</a>
       </nav>
+
+      <!-- Action Buttons -->
       <div class="flex items-center space-x-4">
-        <!-- Search Bar -->
-  
-        <a href="#" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Login</a>
+        <!-- Login Button -->
+        <a href="#" class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors shadow-sm">
+          Login
+        </a>
+        <!-- Mobile Menu Button -->
         <button class="md:hidden">
-          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>

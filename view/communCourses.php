@@ -58,7 +58,7 @@ $courses = Course::readCoursesByPagination($conn, $courses_per_page, $offset);
                         </div>
                         <div class="mt-4 text-right">
                             <a href="course-details.php?id=<?php echo $course->getId(); ?>" 
-                               class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
                                 View Course
                             </a>
                         </div>

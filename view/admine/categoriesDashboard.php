@@ -147,7 +147,7 @@ $categories = Categorie::readCategories($conn);
   <!-- Hidden Edit Form Row -->
   <tr id="editForm_<?php echo $row->getId(); ?>" class="hidden bg-gray-50">
     <td colspan="4" class="px-6 py-4">
-      <form action="../../includs/administrareur/categoriesHandling/Modify.php" method="POST" class="space-y-4">
+      <form action="../../includs/administrareur/categoriesHandling/modify.php" method="POST" class="space-y-4">
         <input type="hidden" name="category_id" value="<?php echo $row->getId(); ?>">
         <div class="grid grid-cols-2 gap-4">
           <div>
