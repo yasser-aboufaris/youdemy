@@ -25,7 +25,6 @@ class Categorie {
                 $object->setDescription($row['categorie_description']);
                 array_push($objects, $object);
             }
-    
             return $objects;
         } catch (Exception $ex) {
             throw new Exception("Error in readCategories method: " . $ex->getMessage());

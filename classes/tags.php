@@ -14,11 +14,24 @@ class Tag {
             $qry = "SELECT * FROM tags";
             $stmt = $pdo->prepare($qry);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch(Exception $ex) {
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $tags = [];
+    
+            foreach ($data as $row) {
+                $tag = new Tag($pdo); 
+                $tag->setId($row['id_tag']); 
+                $tag->setName($row['tag_name']); 
+                array_push($tags, $tag);
+            }
+            
+            return $tags;
+    
+        } catch (Exception $ex) {
             throw new Exception("Error in readTags method: " . $ex->getMessage());
         }
     }
+    
 
 
     public static function findTag($pdo, $id) {

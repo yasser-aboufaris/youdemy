@@ -42,25 +42,45 @@ class Course {
     }
 
 
+    public static function readCoursesByCategorie($pdo,$id_categorie){
+        $qry = "
+            SELECT * 
+            FROM courses 
+            left join categories 
+            ON courses.id_categorie = categories.id_categorie
+            left join users on users.id_user = courses.id_teacher;
+            where id_categorie = :id_categorie
+
+        ";
+        $stmt = $pdo->prepare($qry);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $courses = [];
+        
+        foreach($data as $row){
+            $object = new self($pdo);
+            $object->setId($row['id_course']);
+            $object->setTitle($row['title']);
+            $object->setDescription($row['description']);
+            $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
+            array_push($courses, $object);
+        }
+        return $courses;
+    }
+
+
 
     public static function readCoursesByPagination($pdo, $limit = 6, $offset = 0) {
         $qry = "
-            SELECT 
-                * 
-            FROM 
-                courses 
+            SELECT * FROM courses 
             LEFT JOIN 
-                categories 
-            ON 
-                courses.id_categorie = categories.id_categorie 
-            LEFT JOIN 
-                users 
-            ON 
-                users.id_user = courses.id_teacher 
-            LIMIT 
-                :limit 
-            OFFSET 
-                :offset;
+            categories  ON 
+            courses.id_categorie = categories.id_categorie 
+            LEFT JOIN users 
+            ON users.id_user = courses.id_teacher 
+            LIMIT :offset , :limit; 
         ";
         
         $stmt = $pdo->prepare($qry);
@@ -70,7 +90,6 @@ class Course {
         
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $courses = [];
-        
         foreach ($data as $row) {
             $object = new self($pdo);
             $object->setId($row['id_course']);
@@ -82,7 +101,6 @@ class Course {
             
             array_push($courses, $object);
         }
-        
         return $courses;
     }
     
