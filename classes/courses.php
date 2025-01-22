@@ -171,7 +171,10 @@ class Course {
         }
     }
 
-    public function insert() {
+
+
+
+    public function insert($tags) {
         try {
             $qry = "INSERT INTO courses (course_title, course_description, course_content, course_type)
                     VALUES (:title, :description, :content, :type)";
@@ -181,8 +184,18 @@ class Course {
             $stmt->bindParam(":content", $this->content);
             $stmt->bindParam(":type", $this->type);
             $stmt->execute();
+    
+            $courseId = $this->pdo->lastInsertId();
+    
+            foreach ($tags as $tag) {
+                $qryTag = "INSERT INTO tagsPost (id_tag, id_course) VALUES (:tag, :course)";
+                $stmtTag = $this->pdo->prepare($qryTag);
+                $stmtTag->bindParam(":tag", $tag);
+                $stmtTag->bindParam(":course", $courseId);
+                $stmtTag->execute();
+            }
         } catch(Exception $ex) {
-            throw new Exception("Error in create method: " . $ex->getMessage());
+            throw new Exception("Error in insert method: " . $ex->getMessage());
         }
     }
 
@@ -215,7 +228,7 @@ class Course {
         $this->id_course = $id;
     }
 
-    public function setId($tags) {
+    public function setTags($tags) {
         $this->tags = $tags;
     }
 

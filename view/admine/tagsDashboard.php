@@ -78,13 +78,7 @@ $tags = Tag::readTags($conn);
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-xl shadow-sm p-6 border border-udemy-border">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-gray-600 text-sm font-medium">Total Categories</h3>
-        </div>
-        <p class="text-3xl font-bold text-gray-800">12</p>
-        <div class="mt-2 text-sm text-gray-600">Active categories</div>
-      </div>
+
 
       <div class="bg-white rounded-xl shadow-sm p-6 border border-udemy-border">
         <div class="flex items-center justify-between mb-4">
@@ -121,7 +115,6 @@ $tags = Tag::readTags($conn);
           <thead class="bg-gray-50">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -136,11 +129,8 @@ $tags = Tag::readTags($conn);
       </div>
     </td>
 
-    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-      Jan 12, 2024
-    </td>
+
     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-      <button onclick="toggleEditForm(<?php echo $row->getId(); ?>)" class="text-udemy-accent hover:text-purple-700 mr-3">Edit</button>
       <button class="text-red-600 hover:text-red-900">Delete</button>
     </td>
   </tr>
@@ -194,59 +184,59 @@ function toggleEditForm(id) {
 
     <!-- Form Container -->
     <div class="max-w-lg mx-auto bg-white rounded-lg shadow p-6">
-    <h3 class="text-xl font-semibold mb-4">Add New Category</h3>
+    <h3 class="text-xl font-semibold mb-4">Add New Tag</h3>
 
     <form id="categoryForm" class="space-y-4">
         <!-- Category Name -->
         <div>
-            <label class="block text-sm mb-1">Category Name</label>
+            <label class="block text-sm mb-1">Tag Name</label>
             <input type="text" id="categorie_name" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" required>
         </div>
-
-        <!-- Category Description -->
-        <div>
-            <label class="block text-sm mb-1">Category Description</label>
-            <textarea id="categorie_description" rows="4" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" required></textarea>
+        <div id="tagsContainer" class="mt-6 space-y-4">
+      <!-- /////////////////////////////////// -->
         </div>
-
         <button type="submit" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700">
-            Add Category
+            Insert Tags
+        </button>
+      
+
+        <button onclick="addNewTagInput()" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700">
+            Add Tag
         </button>
     </form>
 
-    <div id="categoriesList" class="mt-6 space-y-4">
-        <!-- Dynamically added categories will appear here -->
-    </div>
+
 </div>
   </div>
-  <script>
-    const form = document.getElementById('categoryForm');
-    const categoriesList = document.getElementById('categoriesList');
+</div>
+<script>
+function addNewTagInput() {
+    const container = document.getElementById('tagsContainer');
+    const newInput = document.createElement('div');
+    newInput.className = 'tag-input-group flex items-center space-x-2';
+    newInput.innerHTML = `
+        <input type="text" 
+              name="tag_names[]" 
+              class="flex-1 p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" 
+              placeholder="Enter tag name"
+              required>
+        <button type="button" 
+                class="remove-tag bg-red-500 text-white p-2 rounded hover:bg-red-600"
+                onclick="removeTagInput(this)">
+            ×
+        </button>
+    `;
+    container.appendChild(newInput);
+}
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent form from submitting normally
+function removeTagInput(button) {
+    const container = document.getElementById('tagsContainer');
+    if (container.children.length > 1) {
+        button.parentElement.remove();
+    }
+}
 
-        // Get form values
-        const name = document.getElementById('categorie_name').value;
-        const description = document.getElementById('categorie_description').value;
-
-        // Create new category element
-        const categoryItem = document.createElement('div');
-        categoryItem.classList.add('bg-gray-100', 'p-4', 'rounded', 'shadow');
-        categoryItem.innerHTML = `
-            <h4 class="font-semibold">${name}</h4>
-            <p>${description}</p>
-        `;
-
-        // Add the new category to the list
-        categoriesList.appendChild(categoryItem);
-
-        // Clear the form fields
-        form.reset();
-    });
 </script>
-
-
 
 
 

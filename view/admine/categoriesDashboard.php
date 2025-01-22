@@ -147,7 +147,7 @@ $categories = Categorie::readCategories($conn);
   <!-- Hidden Edit Form Row -->
   <tr id="editForm_<?php echo $row->getId(); ?>" class="hidden bg-gray-50">
     <td colspan="4" class="px-6 py-4">
-      <form action="../../includs/administrareur/categoriesHandling/modify.php" method="POST" class="space-y-4">
+      <form action="../../includs/administrateur/categoriesHandling/modify.php?id=<?php echo $row->getId(); ?>" method="POST" class="space-y-4">
         <input type="hidden" name="category_id" value="<?php echo $row->getId(); ?>">
         <div class="grid grid-cols-2 gap-4">
           <div>
@@ -201,18 +201,18 @@ function toggleEditForm(id) {
       <div class="p-6">
         <h3 class="text-xl font-semibold text-gray-800 mb-6">Add New Category</h3>
         
-        <form action="#" method="POST" class="space-y-6">
+        <form action="../../includs/administrateur/categoriesHandling/insert.php" method="POST" class="space-y-6">
           <!-- Category Name -->
           <div>
             <label for="categorie_name" class="block text-sm font-medium text-gray-700">Category Name</label>
-            <input type="text" id="categorie_name" name="categorie_name" required 
+            <input type="text" id="categorie_name" name="name" required 
                   class="mt-1 block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-udemy-accent focus:border-udemy-accent">
           </div>
 
           <!-- Category Description -->
           <div>
             <label for="categorie_description" class="block text-sm font-medium text-gray-700">Category Description</label>
-            <textarea id="categorie_description" name="categorie_description" required rows="4" 
+            <textarea id="categorie_description" name="description" required rows="4" 
                       class="mt-1 block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-udemy-accent focus:border-udemy-accent"></textarea>
           </div>
 

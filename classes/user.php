@@ -7,16 +7,15 @@ class User {
     private $password;
     private $role;
 
-    public function __construct($pdo, $email = null, $password = null) {
+    public function __construct($pdo) {
         $this->pdo = $pdo;
-        $this->email = $email;
-        $this->password = $password;
     }
 
 
     ///////////////////////
     public function setSession(){
-
+        $_SESSION['id_user'] = $this->id_user;
+        $_SESSION['role'] = $this->role;
     }
 
 

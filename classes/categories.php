@@ -64,7 +64,7 @@ class Categorie {
         }
     }
 
-    public function create() {
+    public function insert() {
         try {
             $qry = "INSERT INTO categories (categorie_name, categorie_description)
                     VALUES (:name, :description)";

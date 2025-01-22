@@ -1,5 +1,6 @@
 <?php
 require_once '../../classes/conn.php';
+require_once '../../classes/user.php';
 session_start();  
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,16 +18,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("SELECT id_user, password FROM users WHERE user_email = :email");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE user_email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id_user'];
+                $user = new User($conn);
+                $user->setIdUser($user['id_user']);
+                $user->setRole($user['id_role']);
+                $user->setSession();
                 echo "Login successful!";
-                header("Location: /dashboard.php");
+        
+                if ($user['id_role'] == 1) {
+                    header("Location: ../../view/admine/categoriesDashboard.php");
+                } elseif ($user['id_role'] == 2) {
+                    header("Location: ../../view/admine/categoriesDashboard.php");
+                } elseif ($user['id_role'] == 3) {
+                    header("Location: ../../view/admine/categoriesDashboard.php");
+                }
+
                 exit;
             } else {
                 echo "Invalid password!";
