@@ -1,11 +1,11 @@
 <?php
 class User {
     protected $pdo;
-    private $id_user;
-    private $user_name;
-    private $email;
-    private $password;
-    private $role;
+    protected $id_user;
+    protected $user_name;
+    protected $email;
+    protected $password;
+    protected $role;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;

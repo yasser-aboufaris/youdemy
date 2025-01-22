@@ -25,6 +25,10 @@ class Connection
     public function prepare($sql) {
         return $this->conn->prepare($sql);
     }
+
+    public function lastInsertId() {
+        return $this->conn->lastInsertId();
+    }
     
 }
 $conn = new Connection();

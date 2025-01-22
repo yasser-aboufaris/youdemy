@@ -88,8 +88,8 @@ class Course {
         ";
         
         $stmt = $pdo->prepare($qry);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);  // Fixed bindParam and added type
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT); // Fixed bindParam and added type
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);  
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT); 
         $stmt->execute();
         
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -174,26 +174,31 @@ class Course {
 
 
 
-    public function insert($tags) {
-        try {
-            $qry = "INSERT INTO courses (course_title, course_description, course_content, course_type)
-                    VALUES (:title, :description, :content, :type)";
+    public function insert() {
+        try {            
+            $qry = "INSERT INTO courses (id_teacher, title,description, 
+                    content,type, id_categorie)
+                    VALUES (:teacher, :title, :description, :content, :type, :categorie)";
+            
             $stmt = $this->pdo->prepare($qry);
+            $stmt->bindParam(":teacher", $this->teacher);
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":description", $this->description);
             $stmt->bindParam(":content", $this->content);
             $stmt->bindParam(":type", $this->type);
+            $stmt->bindParam(":categorie", $this->categorie);
             $stmt->execute();
     
             $courseId = $this->pdo->lastInsertId();
-    
-            foreach ($tags as $tag) {
+            
+            foreach ($this->tags as $tag) {
                 $qryTag = "INSERT INTO tagsPost (id_tag, id_course) VALUES (:tag, :course)";
                 $stmtTag = $this->pdo->prepare($qryTag);
                 $stmtTag->bindParam(":tag", $tag);
                 $stmtTag->bindParam(":course", $courseId);
                 $stmtTag->execute();
             }
+    
         } catch(Exception $ex) {
             throw new Exception("Error in insert method: " . $ex->getMessage());
         }

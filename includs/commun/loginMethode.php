@@ -19,27 +19,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $stmt = $conn->prepare("SELECT * FROM users WHERE user_email = :email");
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $user = new User($conn);
-                $user->setIdUser($user['id_user']);
-                $user->setRole($user['id_role']);
-                $user->setSession();
-                echo "Login successful!";
+                $userr = new User($conn);
+                $userr->setIdUser($user['id_user']);
+                $userr->setRole($user['id_role']);
+                $userr->setSession();
+                echo $user['id_role'];
         
                 if ($user['id_role'] == 1) {
-                    header("Location: ../../view/admine/categoriesDashboard.php");
+                    header("Location: ../../testBoy.php");
+                    echo "1";
                 } elseif ($user['id_role'] == 2) {
-                    header("Location: ../../view/admine/categoriesDashboard.php");
+                    echo "2";
+                    header("location ../../testBoy.php");
                 } elseif ($user['id_role'] == 3) {
-                    header("Location: ../../view/admine/categoriesDashboard.php");
+                    echo "3";
+                    header("location ../../testBoy.php");
                 }
-
-                exit;
             } else {
                 echo "Invalid password!";
             }
