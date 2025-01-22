@@ -131,7 +131,7 @@ $tags = Tag::readTags($conn);
 
 
     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-      <button class="text-red-600 hover:text-red-900">Delete</button>
+    <a href="../../includs/administrateur/tagsHandling/delete.php?id=<?php echo $row->getId(); ?>" class="text-red-600 hover:text-red-900">Delete</a>
     </td>
   </tr>
   <!-- Hidden Edit Form Row -->

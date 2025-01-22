@@ -72,7 +72,7 @@ $courses = Course::readCoursesByPagination($conn, $courses_per_page, $offset);
                     <nav class="flex items-center space-x-2">
                         <?php if ($current_page > 1): ?>
                             <a href="?page=<?php echo $current_page - 1; ?>" 
-                               class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Previous</a>
+                            class="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm">Previous</a>
                         <?php endif; ?>
                         
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
