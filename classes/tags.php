@@ -71,17 +71,22 @@ class Tag {
         }
     }
 
-    public function create() {
+    public function insert() {
         try {
-            $qry = "INSERT INTO tags tag_name
-                    VALUES :name";
+            $qry = "INSERT INTO tags (tag_name) VALUES (:name)";
             $stmt = $this->pdo->prepare($qry);
+    
+            if (empty($this->name)) {
+                throw new Exception("Tag name cannot be empty.");
+            }
             $stmt->bindParam(":name", $this->name);
+    
             $stmt->execute();
-        } catch(Exception $ex) {
-            throw new Exception("Error in create method: " . $ex->getMessage());
+        } catch (Exception $ex) {
+            throw new Exception("Error in insert method: " . $ex->getMessage());
         }
     }
+    
 
     // Getters
     public function getId() {

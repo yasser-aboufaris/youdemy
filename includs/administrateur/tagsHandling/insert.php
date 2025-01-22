@@ -1,13 +1,18 @@
 <?php
 require_once '../../../classes/conn.php';
-require_once '../../../classes/categories.php';
-
+require_once '../../../classes/tags.php';
 
 $tag = new Tag($conn);
-$categorie->setName($_POST['name']);
-$categorie->insert();
 
+if (isset($_POST['tags']) && is_array($_POST['tags'])) {
+    $tags = $_POST['tags'];
 
-foreach(){
-    
+    foreach ($tags as $tagName) {
+        if (!empty($tagName)) {
+            $tag->setName($tagName);
+            $tag->insert();
+        }
+    }
+} else {
+    echo "Invalid or missing tags.";
 }

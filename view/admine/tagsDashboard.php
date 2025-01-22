@@ -8,7 +8,7 @@ $tags = Tag::readTags($conn);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Categories Dashboard</title>
+  <title>Tags Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -186,19 +186,21 @@ function toggleEditForm(id) {
     <div class="max-w-lg mx-auto bg-white rounded-lg shadow p-6">
     <h3 class="text-xl font-semibold mb-4">Add New Tag</h3>
 
-    <form id="categoryForm" class="space-y-4">
+    <form  action ="../../includs/administrateur/tagsHandling/insert.php" method="POST" id="categoryForm" class="space-y-4">
         <!-- Category Name -->
-        <div>
-            <label class="block text-sm mb-1">Tag Name</label>
-            <input type="text" id="categorie_name" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" required>
-        </div>
         <div id="tagsContainer" class="mt-6 space-y-4">
-      <!-- /////////////////////////////////// -->
+        <input type="text" 
+              name="tags[]" 
+              class="flex-1 p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" 
+              placeholder="Enter tag name"
+              required>
+
         </div>
-        <button type="submit" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700">
-            Insert Tags
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+        <button type="submit" 
+                    class="block w-full text-center bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                Insert Tags
         </button>
-      
 
         <button onclick="addNewTagInput()" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700">
             Add Tag
@@ -216,7 +218,7 @@ function addNewTagInput() {
     newInput.className = 'tag-input-group flex items-center space-x-2';
     newInput.innerHTML = `
         <input type="text" 
-              name="tag_names[]" 
+              name="tags[]" 
               class="flex-1 p-2 border rounded focus:outline-none focus:ring-1 focus:ring-purple-500" 
               placeholder="Enter tag name"
               required>
