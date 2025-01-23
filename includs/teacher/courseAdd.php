@@ -1,10 +1,10 @@
 <?php
 session_start(); 
 
-if (!isset($_SESSION['id_user'])) {
-    die('Access denied. Please log in.'); 
+// if (!isset($_SESSION['id_user'])) {
+//     die('Access denied. Please log in.'); 
 
-$id_teacher = $_SESSION['id_user'];
+// $id_teacher = $_SESSION['id_user'];
 
 require_once '../../classes/conn.php';
 require_once '../../classes/tags.php';
