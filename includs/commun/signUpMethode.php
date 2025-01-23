@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            if ($role == 1) {  
+            if ($role == 3) {  
                 $activated = 0;
             } else {
                 $activated = 1; 

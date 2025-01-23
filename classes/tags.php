@@ -30,6 +30,36 @@ class Tag {
         } catch (Exception $ex) {
             throw new Exception("Error in readTags method: " . $ex->getMessage());
         }
+
+    }
+
+
+
+    public static function readTagsByCourse($pdo, $id_course) {
+        try {
+            $qry = "SELECT * FROM tagspost 
+            LEFT JOIN tags ON tagspost.id_tag = tags.id_tag
+            WHERE id_course = :id_course";
+            
+            $stmt = $pdo->prepare($qry);
+            $stmt->bindParam(':id_course', $id_course, PDO::PARAM_INT);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $tags = [];
+    
+            foreach ($data as $row) {
+                $tag = new Tag($pdo); 
+                $tag->setId($row['id_tag']); 
+                $tag->setName($row['tag_name']); 
+                $tags[] = $tag;
+            }
+            
+            return $tags;
+    
+        } catch (Exception $ex) {
+            throw new Exception("Error in readTags method: " . $ex->getMessage());
+        }
     }
     
 
@@ -108,4 +138,4 @@ class Tag {
         $this->name = $name;
         return $this;
     }
-}
+        }

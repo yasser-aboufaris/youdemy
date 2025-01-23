@@ -6,23 +6,31 @@ class Client extends User {
         parent::__construct($pdo);
     }
 
-    public static function readClients($pdo){
-        $qry="select * from users where id_role !=1";
-        $stmt=$pdo->prepare($qry);
-        $stmt->execute();
-        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
-        $users=[];
-        foreach($data as $row){
-            $object = new self($pdo);
-            $object->setIdUser($row['id_user']);
-            $object->setEmail($row['user_email']);
-            $object->setUserName($row['user_name']);
-            array_push($users,$object);
+    public static function readClients($pdo) {
+        $sql = "SELECT 
+        u.id_user,
+        u.activated,
+        u.user_name,
+        u.user_email,
+        r.role_name
+    FROM users u
+    INNER JOIN roles r ON u.id_role = r.id_role
+    WHERE u.id_role != 1
+    ORDER BY u.user_name";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+        
+        $users = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $user = new self($pdo);
+            $user->setIdUser($row['id_user']);
+            $user->setUserName($row['user_name']);
+            $user->setEmail($row['user_email']);
+            $user->setRole($row['role_name']);
+            $user->setActivated($row['activated']); 
+            $users[] = $user;
         }
         return $users;
-    } 
-
-    
-
-
+    }
 }

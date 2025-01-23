@@ -44,34 +44,33 @@ $courses = Course::readCoursesByCategorie($conn,$id_categorie)
             <!-- Course List -->
             <div class="space-y-6">
                 <!-- Course Card -->
-                <?php foreach($courses as $course){ ?>
-                <div class="flex items-center bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-4 space-x-4">
-                    <div class="flex-1">
-                        <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors">
-                            <?php echo $course->getTitle()?>
-                        </h3>
-                        <p class="text-sm text-gray-600 mt-1 line-clamp-2">
-                            <?php echo $course->getDescription() ?>
-                        </p>
-                        <div class="flex items-center text-xs text-gray-500 mt-3 space-x-6">
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.318l-1.318 2.684-2.946.429 2.132 2.084-.503 2.943L12 11.446l2.635 1.012-.503-2.943 2.132-2.084-2.946-.429L12 4.318z" />
-                                </svg>
-                                4.8 (2,456)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                    <?php if ($course->getType() === "video") {
-                        echo '<a href="./index.php" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>';
-                        } else if ($course->getType() === "text") {
-                        echo '<a href="../teacher" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium">Manage Course</a>';
-                        } 
-?>
-                    </div>
+                <?php foreach($courses as $course): ?>
+    <div class="flex items-center bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-4 space-x-4">
+        <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors">
+                <?php echo htmlspecialchars($course->getTitle()); ?>
+            </h3>
+            <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                <?php echo htmlspecialchars($course->getDescription()); ?>
+            </p>
+            <div class="flex items-center text-xs text-gray-500 mt-3 space-x-6">
+                <div class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.318l-1.318 2.684-2.946.429 2.132 2.084-.503 2.943L12 11.446l2.635 1.012-.503-2.943 2.132-2.084-2.946-.429L12 4.318z" />
+                    </svg>
+                    4.8 (2,456)
                 </div>
-<?php } ?>
+            </div>
+        </div>
+        <div class="text-right flex-shrink-0">
+            <?php if ($course->getType() === "video"): ?>
+                <a href="./index.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
+            <?php elseif ($course->getType() === "text"): ?>
+                <a href="./index.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endforeach; ?>
             </div>
         </div>
     </section>

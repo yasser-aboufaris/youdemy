@@ -68,6 +68,7 @@ class Course {
             $object->setContent($row['content']);
             $object->setTeacher($row['user_name']);
             $object->setCategorie($row['categorie_name']);
+            $object->setType($row['type']);
             array_push($courses, $object);
         }
         return $courses;

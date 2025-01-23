@@ -24,6 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
+            if ($user['activated'] == 0) {
+                echo "Account is not activated. Please contact administrator.";
+                exit;
+            }
+
             if (password_verify($password, $user['password'])) {
                 $userr = new User($conn);
                 $userr->setIdUser($user['id_user']);
@@ -49,4 +54,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error: " . $e->getMessage();
     }
 }
-?>

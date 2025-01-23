@@ -115,79 +115,76 @@ $users =Client::readClients($conn);
         <h3 class="text-xl font-semibold text-gray-800">Recent Users</h3>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <!-- <tr class="hover:bg-gray-50 transition duration-200">
-              <td class="px-6 py-4 whitespace-nowrap">
+      <table class="w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+    <thead class="bg-gray-50">
+        <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+    
+        <?php
+        var_dump($users);
+        
+        foreach ($users as $user): ?>
+          
+        <tr class="hover:bg-gray-50 transition-colors duration-200">
+            <!-- User Column -->
+            <td class="px-6 py-4">
                 <div class="flex items-center">
-                  <div class="h-10 w-10 flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full" src="/api/placeholder/40/40" alt="User avatar">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">John Doe</div>
-                    <div class="text-sm text-gray-500">john.doe@example.com</div>
-                  </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                            <?= htmlspecialchars($user->getUserName()) ?>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            <?= htmlspecialchars($user->getEmail()) ?>
+                        </div>
+                    </div>
                 </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                  Student
+            </td>
+
+            <!-- Role Column -->
+            <td class="px-6 py-4">
+    <span class="px-3 py-1 text-xs font-medium text-gray-700">
+        <?= htmlspecialchars($user->getRole()) ?>
+    </span>
+</td>
+
+            <!-- Status Column (Add this property to your User class) -->
+            <td class="px-6 py-4">
+                <?php 
+                // You'll need to add activated property to your User class
+                $status = $user->getActivated() ? 'Active' : 'Inactive';
+                $statusColor = $user->getActivated() ? 'green' : 'red';
+                ?>
+                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $statusColor ?>-100 text-<?= $statusColor ?>-800">
+                    <?= $status ?>
                 </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Active
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                Jan 15, 2024
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button class="text-udemy-accent hover:text-purple-700 mr-3">Edit</button>
-                <button class="text-red-600 hover:text-red-900">Delete</button>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-50 transition duration-200"> -->
-              <?php 
-              foreach($users as $object){
-                
-              ?>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">²
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900"><?php echo $object->getUserName();?></div>
-                    <div class="text-sm text-gray-500"><?php echo $object->getEmail();?></div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                  Instructor
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Active
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                Jan 12, 2024
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button class="text-red-600 hover:text-red-900">ban</button>
-              </td>
-            </tr><?php }?>
-          </tbody>
-        </table>
+            </td>
+
+            <!-- Actions Column -->
+            <td class="px-6 py-4 space-x-3">
+    <?php if ($user->getActivated() != 1): ?>
+        <button onclick="editUser(<?= $user->getIdUser() ?>)" class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">
+            Edit
+        </button>
+    <?php endif; ?>
+
+    <?php if ($user->getActivated() == 1): ?>
+        <button onclick="toggleUserStatus(<?= $user->getIdUser() ?>, <?= $user->getActivated() ? 0 : 1 ?>)" 
+                class="<?= $user->getActivated() ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900' ?> font-medium text-sm">
+            <?= $user->getActivated() ? 'Deactivate' : 'Activate' ?>
+        </button>
+    <?php endif; ?>
+</td>
+
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
       </div>
     </div>
   </div>

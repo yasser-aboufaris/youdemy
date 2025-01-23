@@ -6,6 +6,8 @@ class User {
     protected $email;
     protected $password;
     protected $role;
+    protected $activated;
+
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -49,6 +51,16 @@ class User {
 
     public function setRole($role) {
         $this->role = $role;
+    }
+
+
+    
+    public function getActivated() {
+        return $this->activated;
+    }
+
+    public function setActivated($activated) {
+        $this->activated = (bool)$activated;
     }
 }
 
