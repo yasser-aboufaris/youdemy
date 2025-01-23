@@ -1,11 +1,13 @@
 <?php
 include "../../classes/conn.php" ;
 include "../../classes/courses.php";
-$courses = Course::readCourses($conn);
+
 session_start();
 if(($_SESSION['role'] != 2) || !isset($_SESSION['role'])){
     header('Location: ../autentification/login.php');
 }
+$id_user = $_SESSION['id_user'];
+$courses = Course::readCoursesByTeacher($conn, $id_user);
 ?>
 
 
@@ -40,10 +42,11 @@ if(($_SESSION['role'] != 2) || !isset($_SESSION['role'])){
                 <h1 class="text-3xl font-bold text-gray-900">My Courses</h1>
                 <p class="mt-1 text-gray-500">Manage your current courses and assignments</p>
             </div>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
-                <i class="fas fa-plus"></i>
-                Add New Course
-            </button>
+            <a href="./createCourse.php" 
+    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+    <i class="fas fa-plus"></i>
+    Add New Course
+</a>
         </div>
 
         <!-- Stats Section -->

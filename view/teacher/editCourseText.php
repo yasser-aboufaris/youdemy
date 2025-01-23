@@ -36,51 +36,7 @@ $categories = Categorie::readCategories($conn);
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="sm:grid sm:grid-cols-3 sm:gap-6 sm:items-start sm:pt-6">
-    <label for="content" class="block text-lg font-semibold text-gray-800 sm:mt-px sm:pt-2">
-        Course Content *
-    </label>
-    <div class="mt-2 sm:mt-0 sm:col-span-2">
-        <!-- Text Area for Text Course -->
-        <div id="textContent">
-            <textarea id="contentText" name="content" rows="8" required
-                class="block w-full p-4 rounded-lg border-2 border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                placeholder="Enter your course content here"></textarea>
-            <p class="mt-2 text-sm text-gray-500" id="contentCount">0/5000 characters</p>
-        </div>
-        
-        <!-- URL Input for Video Course -->
-        <div id="videoContent" class="hidden">
-            <input type="url" id="contentVideo" name="content" required
-                class="block w-full p-4 rounded-lg border-2 border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                placeholder="Enter your video URL here"/>
-        </div>
-    </div>
-</div>
-
         <form action="../../includs/teacher/courseAdd.php" method="POST"  class="space-y-8 divide-y divide-gray-200">
-        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                            Course Type *
-                        </label>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2 space-y-4">
-                            <div class="flex items-center space-x-6">
-                                <div class="flex items-center">
-                                    <input  type="radio" id="video" name="type" value="Video" required
-                                        class="h-4 w-4 border-gray-300 text-purple-600 focus:ring-purple-500"/>
-                                    <label for="video" class="ml-3 block text-sm font-medium text-gray-700">Video Course</label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="radio" id="text" name="type" value="Text" required
-                                        class="h-4 w-4 border-gray-300 text-purple-600 focus:ring-purple-500"/>
-                                    <label for="text" class="ml-3 block text-sm font-medium text-gray-700">Text Course</label>
-                                </div>
-                            </div>
-                            <div id="typeDetails" class="hidden mt-4 p-4 bg-purple-50 rounded-md">
-                                <!-- Dynamic content will be inserted here by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
             <!-- Basic Information -->
             <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                 <div class="space-y-6 sm:space-y-5">
@@ -147,10 +103,6 @@ $categories = Categorie::readCategories($conn);
     </div>
 </div>
 
-
-                </div>
-            </div>
-
             <!-- Tags Section -->
             <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
     <div>
@@ -196,41 +148,5 @@ $categories = Categorie::readCategories($conn);
             </div>
         </form>
     </main>
-
-
 </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get elements
-        const videoRadio = document.getElementById('video');
-        const textRadio = document.getElementById('text');
-        const textContent = document.getElementById('textContent');
-        const videoContent = document.getElementById('videoContent');
-        const textArea = document.getElementById('contentText');
-        const contentCount = document.getElementById('contentCount');
-
-        // Switch between text and video inputs
-        function toggleContent() {
-            if (videoRadio.checked) {
-                textContent.classList.add('hidden');
-                videoContent.classList.remove('hidden');
-                document.getElementById('contentVideo').required = true;
-                document.getElementById('contentText').required = false;
-            } else {
-                textContent.classList.remove('hidden');
-                videoContent.classList.add('hidden');
-                document.getElementById('contentVideo').required = false;
-                document.getElementById('contentText').required = true;
-            }
-        }
-
-        // Add event listeners to radio buttons
-        videoRadio.addEventListener('change', toggleContent);
-        textRadio.addEventListener('change', toggleContent);
-
-        // Call toggleContent on page load to set the initial state
-        toggleContent();
-    });
-</script>

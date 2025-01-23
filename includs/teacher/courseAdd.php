@@ -1,10 +1,10 @@
 <?php
 session_start(); 
 
-// if (!isset($_SESSION['id_user'])) {
-//     die('Access denied. Please log in.'); 
-
-// $id_teacher = $_SESSION['id_user'];
+if (!isset($_SESSION['id_user'])) {
+    die('Access denied. Please log in.'); 
+}
+$id_teacher = $_SESSION['id_user'];
 
 require_once '../../classes/conn.php';
 require_once '../../classes/tags.php';
@@ -31,7 +31,7 @@ $course->setCategorie($category);
 $course->setDescription($description);
 $course->setContent($content);
 $course->setType($type);
-// $course->setTeacher($id_teacher);
+$course->setTeacher($id_teacher);
 $course->setTags($tags);
 
 $course->insert();

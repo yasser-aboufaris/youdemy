@@ -116,7 +116,7 @@ class Course {
             left join categories 
             ON courses.id_categorie = categories.id_categorie
             left join users on users.id_user = courses.id_teacher
-            where id_teacher = :id_yeacher
+            where id_teacher = :id_teacher
             ;
 
         ";
@@ -138,6 +138,63 @@ class Course {
         }
         return $courses;
     }
+
+
+
+    public static function readCoursesById($pdo, $id) {
+        // First query for course details
+        $qry = "
+            SELECT courses.*, categories.categorie_name, users.user_name 
+            FROM courses 
+            LEFT JOIN categories ON courses.id_categorie = categories.id_categorie
+            LEFT JOIN users ON users.id_user = courses.id_teacher
+            WHERE courses.id_course = :id_course
+        ";
+    
+        // Second query for tags
+        $qry2 = "
+            SELECT tags.* 
+            FROM tagspost
+            LEFT JOIN tags ON tagspost.id_tag = tags.id_tag
+            WHERE id_course = :id_course
+        ";
+    
+        // Prepare and execute first statement
+        $stmt = $pdo->prepare($qry);
+        $stmt->bindParam(":id_course", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        // Prepare and execute second statement
+        $stmt2 = $pdo->prepare($qry2);
+        $stmt2->bindParam(":id_course", $id, PDO::PARAM_INT);
+        $stmt2->execute();
+        $tags = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    
+        $courses = [];
+        
+        foreach($data as $row) {
+            $object = new self($pdo);
+            $object->setId($row['id_course']);
+            $object->setTitle($row['title']);
+            $object->setDescription($row['description']);
+            $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
+            $object->setType($row['type']);
+            
+            $courseTags = [];
+            foreach($tags as $tag) {
+                $courseTags[] = $tag['tag_name']; 
+            }
+            $object->setTags($courseTags);
+            
+            $courses[] = $object;
+        }
+        
+        return $courses;
+    }
+    
     
 
     public function delete() {
@@ -186,6 +243,7 @@ class Course {
             $stmt->bindParam(":description", $this->description);
             $stmt->bindParam(":content", $this->content);
             $stmt->bindParam(":type", $this->type);
+            $stmt->bindParam(":teacher", $this->teacher);
             $stmt->bindParam(":categorie", $this->categorie);
             $stmt->execute();
     
