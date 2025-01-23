@@ -1,21 +1,26 @@
 <?php
 
-include "./user.php";
+include "user.php";
 
-class Admine{
+class Admine {
     
-    public funtion() banTeacher($teacher){
-        $id_yeacher = $teacher->getId();
-        $qry = "update users
-        set activated = 0
-        where id_user = :id_user;
-        ";
+    public static function banTeacher($pdo, $id_teacher) {
+        $qry = "UPDATE users
+                SET activated = 0
+                WHERE id_user = :id_user;";
+        
+        $stmt = $pdo->prepare($qry);
+        $stmt->bindParam(':id_user', $id_teacher, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
-    public funtion() activateTeacher($teacher){
-        $id_yeacher = $teacher->getId();
-        $qry = "update users
-        set activated = 1
-        where id_user = :id_user;
-        ";  
+    public static function activateTeacher($pdo, $id_teacher) {
+        $qry = "UPDATE users
+                SET activated = 1
+                WHERE id_user = :id_user;";
+        
+        $stmt = $pdo->prepare($qry);
+        $stmt->bindParam(':id_user', $id_teacher, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

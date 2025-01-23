@@ -127,7 +127,6 @@ $users =Client::readClients($conn);
     <tbody class="bg-white divide-y divide-gray-200">
     
         <?php
-        var_dump($users);
         
         foreach ($users as $user): ?>
           
@@ -165,19 +164,19 @@ $users =Client::readClients($conn);
                 </span>
             </td>
 
-            <!-- Actions Column -->
             <td class="px-6 py-4 space-x-3">
-    <?php if ($user->getActivated() != 1): ?>
-        <button onclick="editUser(<?= $user->getIdUser() ?>)" class="text-indigo-600 hover:text-indigo-900 font-medium text-sm">
-            Edit
-        </button>
-    <?php endif; ?>
-
-    <?php if ($user->getActivated() == 1): ?>
-        <button onclick="toggleUserStatus(<?= $user->getIdUser() ?>, <?= $user->getActivated() ? 0 : 1 ?>)" 
-                class="<?= $user->getActivated() ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900' ?> font-medium text-sm">
-            <?= $user->getActivated() ? 'Deactivate' : 'Activate' ?>
-        </button>
+    <?php if ($user->getActivated() === false): ?>
+        <!-- Activate Button for Inactive Users -->
+        <a href="../../includs/administrateur/activate.php?id_user=<?= $user->getIdUser()?>)" 
+  class="text-green-600 hover:text-green-900 font-medium text-sm">
+    Activate
+</a>
+    <?php else: ?>
+        <!-- Deactivate Button for Active Users -->
+        <a href="../../includs/administrateur/ban.php?id_user=<?= $user->getIdUser() ?>") 
+  class="text-red-600 hover:text-red-900 font-medium text-sm">
+    Deactivate
+</a>
     <?php endif; ?>
 </td>
 
