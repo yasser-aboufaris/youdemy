@@ -2,6 +2,10 @@
 include "../../classes/conn.php" ;
 include "../../classes/courses.php";
 $courses = Course::readCourses($conn);
+session_start();
+if(($_SESSION['role'] != 2) || !isset($_SESSION['role'])){
+    header('Location: ../autentification/login.php');
+}
 ?>
 
 

@@ -43,7 +43,7 @@
                 <select id="role" name="role" 
                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:outline-none transition duration-200 bg-gray-50 hover:bg-white">
                     <option value="">Select your role</option>
-                    <option value="1">TEACHER</option>
+                    <option value="2">TEACHER</option>
                     <option value="3">STUDENT</option>
 
                 </select>

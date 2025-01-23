@@ -35,11 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: ../../testBoy.php");
                     echo "1";
                 } elseif ($user['id_role'] == 2) {
-                    echo "2";
-                    header("location ../../testBoy.php");
+                    header("location: ../../view/teacher/myCourses.php");
                 } elseif ($user['id_role'] == 3) {
-                    echo "3";
-                    header("location ../../testBoy.php");
+                    header("location: ../../view/teacher/myCourses.php");
                 }
             } else {
                 echo "Invalid password!";
