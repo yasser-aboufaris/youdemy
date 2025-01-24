@@ -30,9 +30,7 @@
       <!-- Action Buttons -->
       <div class="flex items-center space-x-4">
         <!-- Login Button -->
-        <a href="#" class="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors shadow-sm">
-          Login
-        </a>
+        
         <!-- Mobile Menu Button -->
         <button class="md:hidden">
           <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">

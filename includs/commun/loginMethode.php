@@ -1,7 +1,7 @@
 <?php
+session_start();  
 require_once '../../classes/conn.php';
 require_once '../../classes/user.php';
-session_start();  
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
@@ -34,23 +34,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $userr->setIdUser($user['id_user']);
                 $userr->setRole($user['id_role']);
                 $userr->setSession();
-                echo $user['id_role'];
-        
+
                 if ($user['id_role'] == 1) {
                     header("Location: ../../testBoy.php");
-                    echo "1";
+                    exit();  
                 } elseif ($user['id_role'] == 2) {
-                    header("location: ../../view/teacher/myCourses.php");
+                    header("Location: ../../view/teacher/myCourses.php");
+                    exit();  
                 } elseif ($user['id_role'] == 3) {
-                    header("location: ../../view/teacher/myCourses.php");
+                    header("Location: ../../view/user/index.php");
+                    exit(); 
                 }
             } else {
                 echo "Invalid password!";
+                exit;
             }
         } else {
             echo "No account found with this email!";
+            exit;
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        exit;
     }
 }

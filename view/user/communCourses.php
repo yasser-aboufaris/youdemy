@@ -34,19 +34,9 @@ $courses = Course::readCoursesByPagination($conn, $courses_per_page, $offset);
     <?php foreach ($courses as $course): ?>
         <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 p-5 border border-gray-100 hover:border-blue-100">
             <div class="space-y-3">
-                <?php if ($course->getType() === "video"): ?>
-                    <a href="./courseReadVideo.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="block">
-                        <h3 class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-1 cursor-pointer">
-                            <?php echo htmlspecialchars($course->getTitle()); ?>
-                        </h3>
-                    </a>
-                <?php elseif ($course->getType() === "text"): ?>
-                    <a href="courseReadText.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="block">
-                        <h3 class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-1 cursor-pointer">
-                            <?php echo htmlspecialchars($course->getTitle()); ?>
-                        </h3>
-                    </a>
-                <?php endif; ?>
+                <h3 class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-1">
+                    <?php echo htmlspecialchars($course->getTitle()); ?>
+                </h3>
                 <p class="text-sm text-gray-600 line-clamp-3">
                     <?php echo htmlspecialchars($course->getDescription()); ?>
                 </p>
@@ -64,6 +54,17 @@ $courses = Course::readCoursesByPagination($conn, $courses_per_page, $offset);
                         <?php echo htmlspecialchars($course->getCategorie()); ?>
                     </div>
                 </div>
+            </div>
+            <div class="mt-4 flex justify-end">
+                <?php if ($course->getType() === "video"): ?>
+                    <a href="./courseReadVideo.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-semibold">
+                        View Course
+                    </a>
+                <?php elseif ($course->getType() === "text"): ?>
+                    <a href="courseReadText.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-semibold">
+                        View Course
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>

@@ -70,7 +70,46 @@ class Course {
             $object->setCategorie($row['categorie_name']);
             $object->setType($row['type']);
             array_push($courses, $object);
+            
         }
+        return $courses;
+    }
+
+
+    public static function searchCourses($pdo, $searchTerm) {
+        $qry = "
+            SELECT * 
+            FROM courses 
+            LEFT JOIN categories 
+            ON courses.id_categorie = categories.id_categorie
+            LEFT JOIN users 
+            ON users.id_user = courses.id_teacher
+            WHERE courses.title LIKE :searchTerm
+        ";
+    
+        $stmt = $pdo->prepare($qry);
+        $searchTerm = "%$searchTerm%";
+        $stmt->bindParam(':searchTerm', $searchTerm);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        $courses = [];
+    
+        foreach ($data as $row) {
+            $object = new self($pdo);
+            $object->setId($row['id_course']);
+            $object->setTitle($row['title']);
+            $object->setDescription($row['description']);
+            $object->setContent($row['content']);
+            $object->setTeacher($row['user_name']);
+            $object->setCategorie($row['categorie_name']);
+            $object->setType($row['type']);
+    
+
+    
+            array_push($courses, $object);
+        }
+    
         return $courses;
     }
 
@@ -96,6 +135,51 @@ class Course {
     
         } catch (Exception $ex) {
             throw new Exception("Error in insertUserToClass method: " . $ex->getMessage());
+        }
+    }
+
+
+
+
+    public function signCourse($id_user) {
+        try {
+            // Validate course exists
+            if (empty($this->id_course)) {
+                throw new Exception("Course ID not specified");
+            }
+    
+            // Check existing enrollment
+            $qryCheck = "SELECT COUNT(*) FROM usersInClass 
+                        WHERE id_user = :user_id 
+                        AND id_course = :course_id";
+            
+            $stmtCheck = $this->pdo->prepare($qryCheck);
+            $stmtCheck->bindValue(":user_id", $id_user, );
+            $stmtCheck->bindValue(":course_id", $this->id_course);
+            $stmtCheck->execute();
+    
+            if ($stmtCheck->fetchColumn() > 0) {
+                throw new Exception("You're already enrolled in this course");
+            }
+    
+            // Insert enrollment
+            $qryInsert = "INSERT INTO usersInClass (id_user, id_course)
+                        VALUES (:user_id, :course_id)";
+            
+            $stmtInsert = $this->pdo->prepare($qryInsert);
+            $stmtInsert->bindValue(":user_id", $id_user);
+            $stmtInsert->bindValue(":course_id", $this->id_course);
+            
+            if (!$stmtInsert->execute()) {
+                throw new Exception("Failed to complete enrollment");
+            }
+    
+            return true;
+    
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
     
