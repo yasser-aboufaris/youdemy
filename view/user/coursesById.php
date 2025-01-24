@@ -64,9 +64,9 @@ $courses = Course::readCoursesByCategorie($conn,$id_categorie)
         </div>
         <div class="text-right flex-shrink-0">
             <?php if ($course->getType() === "video"): ?>
-                <a href="./index.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
+                <a href="./courseReadVideo.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
             <?php elseif ($course->getType() === "text"): ?>
-                <a href="./index.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
+                <a href="courseReadText.php?id_course=<?php echo htmlspecialchars($course->getId()); ?>" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">View Course</a>
             <?php endif; ?>
         </div>
     </div>

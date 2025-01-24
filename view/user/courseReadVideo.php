@@ -3,15 +3,15 @@ include "../../classes/conn.php";
 include "../../classes/courses.php";
 include "../../classes/tags.php";
 
-$id_course = 3;
+$id_course = 19;
 
-$courses = Course::readCoursesById($pdo, $id_course);
+$courses = Course::readCoursesById($conn, $id_course);
 if (empty($courses)) {
     die("Course not found");
 }
 
 $course = $courses[0];
-$courseTags = Tag::readTagsByCourse($pdo, $id_course);
+$courseTags = Tag::readTagsByCourse($conn, $id_course);
 ?>
 
 <!DOCTYPE html>
@@ -60,12 +60,21 @@ $courseTags = Tag::readTagsByCourse($pdo, $id_course);
 
             <!-- YouTube Video -->
             <div class="max-w-4xl mx-auto p-8">
-                <div class="bg-white shadow-lg rounded-lg p-8">
-                    <div class="aspect-w-16 aspect-h-9 relative w-full">
-                        <?php echo $course->getContent(); ?>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <div class="aspect-w-16 aspect-h-9 relative w-full">
+            <?php 
+            // For video content, output raw HTML
+            if($course->getType() === 'Video') {
+                echo $course->getContent();  // Direct output for trusted HTML
+            } 
+            // For text content, maintain security
+            else {?>
+                <iframe width="560" height="315" src="<?php echo htmlspecialchars($course->getContent());?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <?php }
+            ?>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </body>

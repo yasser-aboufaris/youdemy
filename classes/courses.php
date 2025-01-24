@@ -73,6 +73,32 @@ class Course {
         }
         return $courses;
     }
+
+
+    public function insertUserToClass($id_user) {
+        try {
+            $qryCheck = "SELECT COUNT(*) FROM usersInClass WHERE id_user = :user AND id_course = :course";
+            $stmtCheck = $this->pdo->prepare($qryCheck);
+            $stmtCheck->bindParam(":user", $id_user);
+            $stmtCheck->bindParam(":course", $this->id_course);
+            $stmtCheck->execute();
+    
+            if ($stmtCheck->fetchColumn() > 0) {
+                throw new Exception("User {$id_user} is already enrolled in Course {$this->id_course}.");
+            }
+    
+            // Insert the pair into usersInClass
+            $qryInsert = "INSERT INTO usersInClass (id_user, id_course) VALUES (:user, :course)";
+            $stmtInsert = $this->pdo->prepare($qryInsert);
+            $stmtInsert->bindParam(":user", $id_user);
+            $stmtInsert->bindParam(":course", $this->id_course);
+            $stmtInsert->execute();
+    
+        } catch (Exception $ex) {
+            throw new Exception("Error in insertUserToClass method: " . $ex->getMessage());
+        }
+    }
+    
     
 
 
